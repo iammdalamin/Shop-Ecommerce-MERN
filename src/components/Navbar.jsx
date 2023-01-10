@@ -10,7 +10,7 @@ const Navbar = () => {
   console.log(toggle);
   return (
     <>
-      <nav className="w-full h-[80px] px-12 mx-auto flex items-center justify-between bg-[#dddadac0]  ">
+      <nav className="w-full h-[80px] float-right px-12 mx-auto flex items-center justify-between bg-[#dddadac0]  z-[999999] ">
         <div className="nav-title">
           <a className="font-bold text-2xl" href="/">
             Shop
@@ -22,13 +22,13 @@ const Navbar = () => {
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="/">Products</a>
+              <a href="/ProductPage">Products</a>
             </li>
             <li>
-              <a href="/">About</a>
+              <a href="/AboutPage">About</a>
             </li>
             <li>
-              <a href="/">Contacts</a>
+              <a href="/ContactPage">Contacts</a>
             </li>
           </ui>
         </div>
@@ -67,17 +67,17 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a className="text-2xl" href="/">
+            <a className="text-2xl" href="/ProductPage">
               Products
             </a>
           </li>
           <li>
-            <a className="text-2xl" href="/">
+            <a className="text-2xl" href="/AboutPage">
               About
             </a>
           </li>
           <li>
-            <a className="text-2xl" href="/">
+            <a className="text-2xl" href="/ContactPage">
               Contacts
             </a>
           </li>
