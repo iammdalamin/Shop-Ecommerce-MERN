@@ -32,7 +32,7 @@ const Hero = () => {
     },
   ];
   return (
-    <div className="w-full h-screen bg-gradient-to-r from-cyan-500 to-blue-500">
+    <div className="w-full h-screen ">
       <Swiper
         navigation={true}
         loop={true}
@@ -47,14 +47,16 @@ const Hero = () => {
           return (
             <SwiperSlide key={i} className="relative ">
               <img src={url} />
-              <div
-                className="absolute max-w-[750px] h-auto bg-[#ffffff69]   backdrop-blur-sm drop-shadow-xl
-
- p-10"
-              >
-                <span className="text-4xl text-[#333]">{slogan}</span>
-                <h1 className="text-6xl font-bold">{title}</h1>
-                <p>{text}</p>
+              <div className="absolute ml-auto max-w-[750px] h-auto bg-[#ffffff69] backdrop-blur-sm drop-shadow-xl p-10">
+                <span className="text-4xl text-[#7F85A8]">{slogan}</span>
+                <h1 className="text-6xl font-bold text-[#1a1a1a]">{title}</h1>
+                <p className="text-[#333] mb-8">{text}</p>
+                <a
+                  href="/products"
+                  className=" bg-[#000] hover:bg-[#fff] hover:text-[#000] text-white  px-8 py-4  ease-in-out duration-500 cursor-pointer"
+                >
+                  Shop Now
+                </a>
               </div>
             </SwiperSlide>
           );
