@@ -95,7 +95,8 @@ exports.login = async (req, res) => {
                 role: user.role,
                 address:user.address
             },
-            token
+            token,
+            user
 
         })
 
@@ -107,9 +108,87 @@ exports.login = async (req, res) => {
 exports.updateProfile = async (req, res) => {
     try {
         const { name, password, address } = req.body;
-        const user = await UserModel.findById(req.user._id)
-        console.log(user);
+        // const user = await UserModel.findById(req.user._id)
+        console.log(req.headers["token"]);
+        if (password && password.length < 6) {
+            return res.json({
+                error: "Password is required and should be min 6 characters long",
+              });
+        }
+
+        const hashedPassword = password ? await hashPassword(password) : undefined
+        
+        const updated = await UserModel.findByIdAndUpdate(
+            req.user._id,
+            {
+                name: name || user.name,
+                password: hashedPassword || user.password,
+                address:address||user.address
+            },
+            {new:true}
+        )
+
+        updated.password = undefinedres.json(updated)
     } catch (err) {
         console.log(err);
     }
+}
+
+
+exports.login = (req, res) => {
+    const { email, password } = req.body;
+    if (!email) {
+        return res.json({
+            error: "Enter a valid email"
+        })
+    }
+    if (!password || password.length < 6) {
+        return res.json({
+            error: "Password must be at least 6 characters long"
+        })
+    }
+
+    UserModel.findOne({ email }, (err, data) => {
+        if (err) {
+            res.json({
+               error:"User not found"
+           })
+        } else {
+            const match = comparePassword(password, data.password)
+            if (!match) {
+                res.json({
+                    error:"Password is incorrect"
+                })
+            } else {
+                let Payload = { exp: Math.floor(Date.now() / 1000) * (24 * 60 * 60), data: data["email"] }
+                let token = jwt.sign(Payload, process.env.JWT_SECRET)
+                res.json({
+                    message: "Login Success",
+                    data:data["email"],
+                    token
+                })
+            }
+       }
+    })
+}
+   
+exports.updateProfile = (req, res) => {
+
+    let email = req.headers['email'];
+    let reqBody = req.body;
+console.log(req.headers['email']);
+    UserModel.updateOne({ email: email }, reqBody, (err, data) => {
+        if (err) {
+            res.status(400).json({
+                status: "Fail to Update",
+                data:err
+            })
+        } else {
+            res.status(200).json({
+                status: "Updated Successfull",
+                data: data
+            })
+        }
+    })
+    
 }

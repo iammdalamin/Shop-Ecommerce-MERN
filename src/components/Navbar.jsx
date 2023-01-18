@@ -10,14 +10,14 @@ const Navbar = () => {
   console.log(toggle);
   return (
     <>
-      <nav className="w-full h-[80px] float-right px-12 mx-auto flex items-center justify-between bg-[#dddadac0]  z-[999999] ">
+      <nav className="w-full h-[80px] fixed  px-12 mx-auto flex items-center justify-between bg-[#dddadac0]  z-[999999]  ">
         <div className="nav-title">
           <a className="font-bold text-2xl" href="/">
             Shop
           </a>
         </div>
         <div className="nav-links lg:flex">
-          <ui className=" list-none hidden lg:flex justify-between gap-6  ">
+          <div className=" list-none hidden lg:flex justify-between gap-6  ">
             <li>
               <a href="/">Home</a>
             </li>
@@ -30,7 +30,7 @@ const Navbar = () => {
             <li>
               <a href="/ContactPage">Contacts</a>
             </li>
-          </ui>
+          </div>
         </div>
         <div className="nav-icons flex gap-4">
           <i className="text-2xl">
@@ -60,7 +60,7 @@ const Navbar = () => {
             : "flex justify-center items-center fixed right-[-100%] h-screen w-full  top-20 p-10 z-10 ease-in-out duration-500"
         }
       >
-        <ui className=" list-none flex flex-col gap-6 lg:hidden ">
+        <div className=" list-none flex flex-col gap-6 lg:hidden ">
           <li>
             <a className="text-2xl" href="/">
               Home
@@ -81,7 +81,7 @@ const Navbar = () => {
               Contacts
             </a>
           </li>
-        </ui>
+        </div>
       </div>
     </>
   );
