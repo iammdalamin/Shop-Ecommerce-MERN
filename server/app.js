@@ -1,6 +1,8 @@
 const express = require("express")
 const mongoose = require("mongoose")
-const router = require("./src/routes/api.js")
+const authRoutes = require("./src/routes/auth")
+const productRoutes = require("./src/routes/product.js")
+const categoryRoutes = require("./src/routes/category")
 
 const bodyParser = require("body-parser")
 const cors = require("cors")
@@ -30,7 +32,9 @@ app.use(limiter)
 
 
 //Route Handle
-app.use("/api/v1", router)
+app.use("/api/v1", authRoutes)
+app.use("/api/v1", productRoutes)
+app.use("/api/v1", categoryRoutes)
 
 let OPTION = {
     autoIndex: true,
