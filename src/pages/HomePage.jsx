@@ -6,7 +6,7 @@ const HomePage = () => {
   return (
     <>
       <Hero />
-      <Products itemsPerPage={4} />
+      <Products />
     </>
   );
 };

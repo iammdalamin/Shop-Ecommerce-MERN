@@ -1,38 +1,60 @@
 import axios from "axios";
+import cogoToast from "cogo-toast";
 import { getToken, setToken, setUserDetails } from "../helpers/SessionHelper";
 import { SetProducts } from "../redux/Slice/ProductSlice";
+import store from "../redux/store";
 
-
-const BaseURL = "http://localhost:5000/api/v1";
 const AxiosHeader = {
-    headers: {
-        "Content-Type": "application/json",
-        "token":getToken()
-    }
+    "content-type": "application/json",
+    "token":getToken()
 }
 
+const BaseURL = "http://localhost:5000/api/v1"
 
-export const LoginRequest = (email, password) => {
-    const URL = BaseURL + "/login";
-    let reqBody = { "email": email, "password": password }
-    return axios.get(URL, reqBody).then((res) => {
-        if (res.status === 200) {
-            setToken(res.data["token"])
-            setUserDetails(res.data["data"])
-            return true
-        } else {
-            return false
-        }
+export const fetchAPI = async() => {
+    
+    await axios.get("https://fakestoreapi.com/products").then((res) => {
+        console.log(res.data);
+        store.dispatch(SetProducts(res.data))
     })
-    
-    
 }
 
+export const SignupRequest =  async(reqBody) => {
+    const URL = BaseURL + "/registration"
+    await axios.post(URL, reqBody).then((res) => {
+        const { data } = res;
+        if (data.status === 400) {
+            cogoToast.error(`${data.error}`)
+            console.log(data.error);
 
-export const ProductList = () => {
-    
+        } else {
+            cogoToast.success("Registration Succesfull")
+            console.log(data);
+        }
+        
+    })
+
+    console.log(reqBody);
 }
 
-axios.get(BaseURL+"/list").then((res) => {
-    console.log(res);
-})
+export const LoginRequest = async (reqBody) => {
+    const { email, password } = reqBody;
+    console.log(email);
+
+    const URL = BaseURL + "/login"
+    await axios.get(URL, {email, password}).then((res) => {
+        const { data } = res;
+        if (data.status === 400) {
+            cogoToast.error(`${data.error}`)
+            console.log( data);
+            
+        } else {
+            cogoToast.success("Login Succesfull")
+            setToken(data.token)
+            setUserDetails(data)
+            console.log("data: " + data);
+        }
+        
+    })
+
+}
