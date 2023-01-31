@@ -37,9 +37,12 @@ const Navbar = () => {
             <AiOutlineShoppingCart />
           </i>
 
-          <i className="text-2xl">
-            <CgProfile />
+          <i className="text-2xl cursor-pointer">
+            <a href="/profile">
+              <CgProfile />
+            </a>
           </i>
+
           <i
             className="text-2xl lg:hidden md:inline-block"
             onClick={() => toggleHandle()}

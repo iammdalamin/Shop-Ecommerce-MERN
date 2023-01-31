@@ -20,7 +20,7 @@ const SignupPage = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center ">
-      <div className="w-[60%] h-full bg-slate-600 mt-48 p-8">
+      <div className="w-[550px] h-full bg-slate-600 mt-48 p-8">
         <h2 className="text-3xl text-white text-center font-bold ">Sign Up</h2>
         <div className="flex flex-col gap-4 px-14 py-8">
           <input

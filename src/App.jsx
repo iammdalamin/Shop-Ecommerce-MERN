@@ -19,6 +19,7 @@ function App() {
           <Route path="/AboutPage" element={<AboutPage />} />
           <Route path="/Signup" element={<SignupPage />} />
           <Route path="/Login" element={<LoginPage />} />
+          <Route path="*" element={<h1>Error source</h1>} />
         </Routes>
       </BrowserRouter>
     </div>

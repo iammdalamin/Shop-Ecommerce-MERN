@@ -167,32 +167,38 @@ exports.login = (req, res) => {
     }
 
     UserModel.findOne({ email }, (err, data) => {
-        if (err) {
-            res.json({
-                status:400,
-
-               error:"User not found"
-           })
-        } else {
-            const match = comparePassword(password, data.password)
-            if (!match) {
+        try {
+            if (!err) {
+                console.log("Data=>"+data);
+                const match = comparePassword(password, data.password)
+                console.log("Match" + match);
+                if (!match) {
+                    res.json({
+                        status:400,
+    
+                        error:"Password is incorrect"
+                    })
+                } else {
+                    let Payload = { exp: Math.floor(Date.now() / 1000) * (24 * 60 * 60), data: data["email"] }
+                    let token = jwt.sign(Payload, process.env.JWT_SECRET)
+                    res.json({
+                        status:200,
+    
+                        message: "Login Success",
+                        data:data,
+                        token
+                    })
+                }
+           }
+        } catch {
                 res.json({
                     status:400,
-
-                    error:"Password is incorrect"
+    
+                   error:"User not found"
                 })
-            } else {
-                let Payload = { exp: Math.floor(Date.now() / 1000) * (24 * 60 * 60), data: data["email"] }
-                let token = jwt.sign(Payload, process.env.JWT_SECRET)
-                res.json({
-                    status:200,
-
-                    message: "Login Success",
-                    data:data["email"],
-                    token
-                })
-            }
-       }
+            console.log("Error=> "+ err);
+        }
+       
     })
 }
    

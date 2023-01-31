@@ -1,23 +1,14 @@
 import axios from "axios";
 import cogoToast from "cogo-toast";
 import { getToken, setToken, setUserDetails } from "../helpers/SessionHelper";
-import { SetProducts } from "../redux/Slice/ProductSlice";
-import store from "../redux/store";
-
+import {SetProducts} from "../redux/Slice/ProductSlice.js"
 const AxiosHeader = {
-    "content-type": "application/json",
+    "Content-Type": "application/json",
     "token":getToken()
 }
-
 const BaseURL = "http://localhost:5000/api/v1"
 
-export const fetchAPI = async() => {
-    
-    await axios.get("https://fakestoreapi.com/products").then((res) => {
-        console.log(res.data);
-        store.dispatch(SetProducts(res.data))
-    })
-}
+const dispatch = useDispatch();
 
 export const SignupRequest =  async(reqBody) => {
     const URL = BaseURL + "/registration"
@@ -30,6 +21,7 @@ export const SignupRequest =  async(reqBody) => {
         } else {
             cogoToast.success("Registration Succesfull")
             console.log(data);
+            return true
         }
         
     })
@@ -39,22 +31,51 @@ export const SignupRequest =  async(reqBody) => {
 
 export const LoginRequest = async (reqBody) => {
     const { email, password } = reqBody;
-    console.log(email);
 
     const URL = BaseURL + "/login"
-    await axios.get(URL, {email, password}).then((res) => {
+    await axios.post(URL, {email, password}).then((res) => {
         const { data } = res;
+        console.log(data);
         if (data.status === 400) {
             cogoToast.error(`${data.error}`)
-            console.log( data);
             
         } else {
             cogoToast.success("Login Succesfull")
             setToken(data.token)
             setUserDetails(data)
-            console.log("data: " + data);
+            console.log("data==> " + JSON.stringify(data));
+
+            return JSON.stringify(data);
         }
         
+    }).catch((err) => {
+        cogoToast.error("Login Failed")
+        console.log(err);
+
+    })
+
+}
+
+export const ProductRequest = async () => {
+
+    const URL = BaseURL + "/list"
+    await axios.get(URL).then((res) => {
+        const { data } = res;
+        console.log(data);
+        if (data.status === 400) {
+            cogoToast.error(`${data.error}`)
+            
+        } else {
+            SetProducts(data)
+          
+            console.log("data==> " + JSON.stringify(data));
+
+        }
+        
+    }).catch((err) => {
+        cogoToast.error("Failed to load")
+        console.log(err);
+
     })
 
 }

@@ -1,19 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { LoginRequest } from "../ApiRequest/api";
+import { getUserDetails } from "../helpers/SessionHelper";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleOnSubmit = () => {
-    LoginRequest({
+  const navigate = useNavigate();
+  const handleOnSubmit = async () => {
+    await LoginRequest({
       email,
       password,
     });
+    const user = getUserDetails();
+
+    if (user) {
+      setEmail("");
+      setPassword("");
+      navigate("/");
+      console.log("LoginRequest==>" + user);
+    } else {
+      console.log(false);
+    }
   };
+
+  // useEffect(() => {
+  //   const user = getUserDetails();
+
+  //   if (user) {
+  //     setEmail("");
+  //     setPassword("");
+  //     navigate("/");
+  //     console.log("LoginRequest==>" + user);
+  //   } else {
+  //     console.log("err");
+  //   }
+  // }, []);
 
   return (
     <div className="w-full h-full flex justify-center items-center ">
-      <div className="w-[60%] h-full bg-slate-600 mt-48 p-8">
+      <div className="w-[450px] h-full bg-slate-600 mt-48 p-8 rounded-md">
         <h2 className="text-3xl text-white text-center font-bold ">Login</h2>
         <div className="flex flex-col gap-4 px-14 py-8">
           <input
