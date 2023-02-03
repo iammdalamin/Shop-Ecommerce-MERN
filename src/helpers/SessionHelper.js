@@ -29,4 +29,4 @@ class SessionHelper{
     
 }
 
-export const {setEmail, getEmail, setToken, getToken, setUserDetails, getUserDetails} = new SessionHelper()
+export const {setEmail, getEmail, setToken, getToken, setUserDetails, getUserDetails,removeSessions} = new SessionHelper()

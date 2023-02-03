@@ -6,11 +6,14 @@ const router = express.Router()
 //middlewares
 const { requireSignIn, isAdmin } = require("../middlewares/AuthVerify");
 
-const { create, list } = require("../controllers/products");
+const { create, list, photo, singleProduct } = require("../controllers/products");
 
 
 router.post("/product", requireSignIn, isAdmin, formidable(), create)
 
-router.get("/list", requireSignIn, list)
+router.get("/list", list)
+router.get("/product/photo/:productId", photo);
+router.get("/product/:productId", singleProduct);
+
 
 module.exports = router ;

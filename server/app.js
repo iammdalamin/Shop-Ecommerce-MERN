@@ -21,7 +21,9 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(hpp())
 app.use(xss())
-app.use(helmet())
+app.use(helmet({
+    crossOriginResourcePolicy: false,
+  }))
 app.use(mongoSanitize())
 
 dotenv.config()

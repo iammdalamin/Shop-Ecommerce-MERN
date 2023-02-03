@@ -222,3 +222,21 @@ console.log(req.headers['email']);
     })
     
 }
+   
+exports.selectProfile = (req, res) => {
+    let email = req.headers['email'];
+    UserModel.findOne({ email: email }, (err, data) => {
+        if (err) {
+            res.status(400).json({
+                status: "Fail to Update",
+                data:err
+            })
+        } else {
+            res.status(200).json({
+                status: "User profile getteing successfully",
+                data: data
+            })
+        }
+    })
+    
+}

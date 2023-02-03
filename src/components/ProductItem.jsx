@@ -1,27 +1,31 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AddCart } from "../redux/Slice/CartSlice";
 
-const ProductItem = () => {
+const ProductItem = ({ prod }) => {
+  const { _id, slug, name, description, photo, price, category } = prod;
+
+  const cart = useSelector((state) => state.Cart);
+
   const dispatch = useDispatch();
-  console.log(prods);
-  const { id, title, description, image, price, category } = prods.prod;
-  console.log(title);
+  const cartHandle = (prod) => {
+    dispatch(AddCart(prod));
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
   return (
     <>
-      <h1>Hello</h1>
-
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <a href="#">
-          <div classNameName="w-full h-fit"></div>
           <img
             className="p-8 rounded-t-lg w-full h-[330px]"
-            src={image}
-            alt="product image"
+            src={`http://localhost:5000/api/v1/product/photo/${_id}`}
+            alt={`${name}`}
           />
         </a>
         <div className="px-5 pb-5">
-          <a href="#">
+          <a href={`/product/${slug}`}>
             <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-              {title.slice(0, 30)}
+              {name.slice(0, 30)}
             </h5>
           </a>
           <div className="flex items-center mt-2.5 mb-5">
@@ -83,15 +87,14 @@ const ProductItem = () => {
             <span className="text-3xl font-bold text-gray-900 dark:text-white">
               ${price}
             </span>
-            <a
+            <button
               onClick={() => {
-                useDispatch(AddCart(id));
+                cartHandle(prod);
               }}
-              href="#"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Add to cart
-            </a>
+            </button>
           </div>
         </div>
       </div>

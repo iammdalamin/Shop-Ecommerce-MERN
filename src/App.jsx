@@ -7,6 +7,7 @@ import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import Products from "./components/Products";
 function App() {
   return (
     <div className="w-full mx-auto">
@@ -14,11 +15,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/ProductPage" element={<ProductPage />} />
           <Route path="/ContactPage" element={<ContactPage />} />
           <Route path="/AboutPage" element={<AboutPage />} />
           <Route path="/Signup" element={<SignupPage />} />
           <Route path="/Login" element={<LoginPage />} />
+          <Route path="/product/:productId" element={<ProductPage />} />
+          <Route path="/products" element={<Products />} />
           <Route path="*" element={<h1>Error source</h1>} />
         </Routes>
       </BrowserRouter>

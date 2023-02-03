@@ -52,8 +52,7 @@ exports.create = async (req, res) => {
 exports.list = async (req, res) => {
     try {
         const products = await ProductModel.find({})
-            .populate("category")
-            .select("-photo")
+            .populate("category").select("-photo")
             .limit(12)
             .sort({ createAt: -1 })
         res.json(products)
@@ -61,4 +60,31 @@ exports.list = async (req, res) => {
         console.log(err);
 }
 
+}
+
+exports.photo = async(req, res) => {
+    try {
+
+        const product = await ProductModel.findById(req.params.productId).select("photo")
+        if (product.photo.data) {
+            res.set("Content-Type", product.photo.contentType)
+            return res.send(product.photo.data)
+        }
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+exports.singleProduct = async(req, res) => {
+    try {
+        console.log(req.params);
+
+        const product = await ProductModel.findById(req.params.productId).select("-photo")
+        if (product) {
+            console.log(product);
+            return product
+        }
+    } catch(err) {
+        console.log(err);
+    }
 }
