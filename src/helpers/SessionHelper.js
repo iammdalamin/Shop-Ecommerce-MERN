@@ -19,7 +19,16 @@ class SessionHelper{
     getEmail() {
         return localStorage.getItem("Email")
     }
+    setCart(cartItems) {
+        localStorage.setItem("cart", JSON.stringify(cartItems))
 
+    }
+    getCart() {
+        return JSON.parse(localStorage.getItem("cart"))
+    }
+    removeCart() {
+        return localStorage.removeItem("cart")
+    }
 
     removeSessions = () => {
         localStorage.clear();
@@ -29,4 +38,4 @@ class SessionHelper{
     
 }
 
-export const {setEmail, getEmail, setToken, getToken, setUserDetails, getUserDetails,removeSessions} = new SessionHelper()
+export const {setEmail, getEmail, setToken, getToken, setUserDetails, getUserDetails,setCart,getCart,removeCart,removeSessions} = new SessionHelper()

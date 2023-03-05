@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddCart } from "../redux/Slice/CartSlice";
 
 const ProductItem = ({ prod }) => {
+  const [cartItems, setCartItems] = useState([]);
   const { _id, slug, name, description, photo, price, category } = prod;
 
   const cart = useSelector((state) => state.Cart);
-
+  // console.log(cart.length);
   const dispatch = useDispatch();
-  const cartHandle = (prod) => {
+  const cartHandle = async (prod) => {
+    setCartItems(prod);
     dispatch(AddCart(prod));
     localStorage.setItem("cart", JSON.stringify(cart));
   };
+  console.log(cart.length);
   return (
     <>
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">

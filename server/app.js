@@ -43,7 +43,7 @@ let OPTION = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     }
-
+mongoose.set('strictQuery', false);
 mongoose.connect(process.env.MONGODB_URL,OPTION,  (err) => {
     err ? console.log(err)
     :console.log("Server Connected");

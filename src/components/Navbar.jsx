@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
-import { getUserDetails, removeSessions } from "../helpers/SessionHelper";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import {
+  getCart,
+  getUserDetails,
+  removeSessions,
+} from "../helpers/SessionHelper";
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const [user, setUser] = useState(null);
-
-  const cartItems = localStorage.getItem("cart");
-  console.log(cartItems);
+  const cart = useSelector((state) => state.Cart);
+  const cartItems = getCart();
+  console.log(cart.length);
   const toggleHandle = () => {
     setToggle(!toggle);
   };
@@ -35,34 +41,36 @@ const Navbar = () => {
     <>
       <nav className="w-full h-[80px] fixed  px-12 mx-auto flex items-center justify-between bg-[#dddadac0]  z-[999999]  ">
         <div className="nav-title">
-          <a className="font-bold text-2xl" href="/">
+          <Link className="font-bold text-2xl" to="/">
             Shop
-          </a>
+          </Link>
         </div>
         <div className="nav-links lg:flex">
           <div className=" list-none hidden lg:flex justify-between gap-6  ">
             <li>
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="/products">Products</a>
+              <Link to="/products">Products</Link>
             </li>
             <li>
-              <a href="/AboutPage">About</a>
+              <Link to="/AboutPage">About</Link>
             </li>
             <li>
-              <a href="/ContactPage">Contacts</a>
+              <Link to="/ContactPage">Contacts</Link>
             </li>
           </div>
         </div>
         <div className="nav-icons flex gap-4 relative">
-          <div className=" rounded-full text-sm  absolute bottom-4 left-2">
-            <span>{cartItems ? cartItems.length : `00`}</span>
-          </div>
+          <Link to="/cart">
+            <div className=" rounded-full text-sm  absolute bottom-4 left-2">
+              <span>{cart ? cart?.length : `0`}</span>
+            </div>
 
-          <i className="text-2xl">
-            <AiOutlineShoppingCart />
-          </i>
+            <i className="text-2xl">
+              <AiOutlineShoppingCart />
+            </i>
+          </Link>
 
           <i className="text-2xl cursor-pointer group duration-700 ease-in-out">
             <CgProfile />
@@ -86,7 +94,7 @@ const Navbar = () => {
                     className="mt-10 px-5 py-2 text-lg font-bold bg-gray-900 text-slate-200"
                     onClick={(e) => logoutHandle(e)}
                   >
-                    <a href="/signup">SignUp</a>
+                    <Link to="/signup">SignUp</Link>
                   </button>
                 </>
               )}
@@ -115,24 +123,24 @@ const Navbar = () => {
       >
         <div className=" list-none flex flex-col gap-6 lg:hidden ">
           <li>
-            <a className="text-2xl" href="/">
+            <Link className="text-2xl" to="/">
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a className="text-2xl" href="/ProductPage">
+            <Link className="text-2xl" to="/ProductPage">
               Products
-            </a>
+            </Link>
           </li>
           <li>
-            <a className="text-2xl" href="/AboutPage">
+            <Link className="text-2xl" to="/AboutPage">
               About
-            </a>
+            </Link>
           </li>
           <li>
-            <a className="text-2xl" href="/ContactPage">
+            <Link className="text-2xl" to="/ContactPage">
               Contacts
-            </a>
+            </Link>
           </li>
         </div>
       </div>
