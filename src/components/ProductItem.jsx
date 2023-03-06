@@ -1,36 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { getCart, setCart } from "../helpers/SessionHelper";
 import { AddCart } from "../redux/Slice/CartSlice";
 
 const ProductItem = ({ prod }) => {
-  const [cartItems, setCartItems] = useState([]);
   const { _id, slug, name, description, photo, price, category } = prod;
 
   const cart = useSelector((state) => state.Cart);
   // console.log(cart.length);
   const dispatch = useDispatch();
   const cartHandle = async (prod) => {
-    setCartItems(prod);
     dispatch(AddCart(prod));
-    localStorage.setItem("cart", JSON.stringify(cart));
   };
-  console.log(cart.length);
+  setCart(cart);
+
   return (
     <>
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
+        <Link to={`/product/${slug}`}>
           <img
             className="p-8 rounded-t-lg w-full h-[330px]"
             src={`http://localhost:5000/api/v1/product/photo/${_id}`}
             alt={`${name}`}
           />
-        </a>
+        </Link>
         <div className="px-5 pb-5">
-          <a href={`/product/${slug}`}>
+          <Link to={`/product/${slug}`}>
             <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
               {name.slice(0, 30)}
             </h5>
-          </a>
+          </Link>
           <div className="flex items-center mt-2.5 mb-5">
             <svg
               aria-hidden="true"

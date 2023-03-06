@@ -81,9 +81,9 @@ export const ProductListRequest = async () => {
 
 }
 
-export const singleProduct = async (productId) => {
+export const singleProduct = async (slug) => {
 
-    const URL = BaseURL + `/product/${productId}`
+    const URL = BaseURL + `/product/${slug}`
     await axios.get(URL).then((res) => {
         console.log("res"+res);
         const { data } = res;

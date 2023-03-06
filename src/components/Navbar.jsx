@@ -14,7 +14,6 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const cart = useSelector((state) => state.Cart);
   const cartItems = getCart();
-  console.log(cart.length);
   const toggleHandle = () => {
     setToggle(!toggle);
   };
@@ -24,19 +23,19 @@ const Navbar = () => {
     removeSessions();
     setUser(null);
   };
-
+  const UserDetails = async () => {
+    const user = await getUserDetails();
+    if (user) {
+      setUser(user.data);
+    } else {
+      setUser(null);
+    }
+  };
   useEffect(() => {
-    const UserDetails = () => {
-      const user = getUserDetails();
-      if (user) {
-        setUser(user.data);
-      } else {
-        setUser(null);
-      }
-    };
     UserDetails();
     // UserProfile();
   }, []);
+
   return (
     <>
       <nav className="w-full h-[80px] fixed  px-12 mx-auto flex items-center justify-between bg-[#dddadac0]  z-[999999]  ">
@@ -64,7 +63,7 @@ const Navbar = () => {
         <div className="nav-icons flex gap-4 relative">
           <Link to="/cart">
             <div className=" rounded-full text-sm  absolute bottom-4 left-2">
-              <span>{cart ? cart?.length : `0`}</span>
+              <span>{getCart() ? getCart().length + 1 : `0`}</span>
             </div>
 
             <i className="text-2xl">

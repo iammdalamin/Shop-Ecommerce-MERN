@@ -77,11 +77,9 @@ exports.photo = async(req, res) => {
 
 exports.singleProduct = async(req, res) => {
     try {
-        console.log(req.params);
 
-        const product = await ProductModel.findById(req.params.productId).select("-photo")
+        const product = await ProductModel.find({slug:req.params.slug}).select("-photo")
         if (product) {
-            console.log(product);
             return product
         }
     } catch(err) {

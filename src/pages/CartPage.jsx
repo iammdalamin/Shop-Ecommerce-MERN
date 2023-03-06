@@ -1,11 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CartItem from "../components/CartItem";
 import { getCart, removeCart } from "../helpers/SessionHelper";
 
 const CartPage = () => {
   const cartItems = getCart();
+  const navigate = useNavigate();
   const deleteHandle = () => {
     removeCart();
+    window.location.reload(true);
+  };
+
+  const orderHandle = async () => {
+    const cart = await getCart();
+    console.log(cart);
   };
   return (
     <div className="px-12 py-20 w-full">
@@ -33,7 +41,10 @@ const CartPage = () => {
             >
               Delete Cart
             </button>
-            <button className="px-4 py-2 bg-green-900 text-white">
+            <button
+              onClick={() => orderHandle()}
+              className="px-4 py-2 bg-green-900 text-white"
+            >
               CheckOut
             </button>
           </div>

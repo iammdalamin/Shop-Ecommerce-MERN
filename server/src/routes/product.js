@@ -13,7 +13,7 @@ router.post("/product", requireSignIn, isAdmin, formidable(), create)
 
 router.get("/list", list)
 router.get("/product/photo/:productId", photo);
-router.get("/product/:productId", singleProduct);
+router.get("/product/:slug", singleProduct);
 
 
 module.exports = router ;

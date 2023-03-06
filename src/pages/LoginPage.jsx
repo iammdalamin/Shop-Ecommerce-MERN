@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { LoginRequest } from "../ApiRequest/api";
 import { getUserDetails } from "../helpers/SessionHelper";
@@ -12,13 +12,14 @@ const LoginPage = () => {
       email,
       password,
     });
-    const user = getUserDetails();
+    const user = await getUserDetails();
 
     if (user) {
       setEmail("");
       setPassword("");
       navigate("/");
-      console.log("LoginRequest==>" + user);
+      console.log("LoginRequest==>" + user.toString());
+      window.location.reload(true);
     } else {
       console.log(false);
     }
