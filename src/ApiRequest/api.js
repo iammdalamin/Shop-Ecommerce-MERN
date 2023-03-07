@@ -1,7 +1,6 @@
 import axios from "axios";
 import cogoToast from "cogo-toast";
 import { getToken, setToken, setUserDetails } from "../helpers/SessionHelper";
-import { SetProducts } from "../redux/Slice/ProductSlice";
 import store from "../redux/store";
 
 const AxiosHeader = {
@@ -56,54 +55,6 @@ export const LoginRequest = async (reqBody) => {
 
 }
 
-export const ProductListRequest = async () => {
-
-    const URL = BaseURL + "/list"
-    await axios.get(URL).then((res) => {
-        const { data } = res;
-        if (data.status === 400) {
-            cogoToast.error(`${data.error}`)
-            
-        } else {
-            const products = data
-            products.map((prod) => {
-                store.dispatch(SetProducts(prod)) 
-
-          })
-
-        }
-        
-    }).catch((err) => {
-        cogoToast.error("Failed to load")
-        console.log(err);
-
-    })
-
-}
-
-export const singleProduct = async (slug) => {
-
-    const URL = BaseURL + `/product/${slug}`
-    await axios.get(URL).then((res) => {
-        console.log("res"+res);
-        const { data } = res;
-        if (data.status === 400) {
-            cogoToast.error(`${data.error}`)
-            
-        } else {
-            const product = data
-            console.log("data=>" +product);
-            return product
-
-        }
-        
-    }).catch((err) => {
-        cogoToast.error("Failed to load")
-        console.log(err);
-
-    })
-
-}
 
 export const UserProfile = async () => {
 

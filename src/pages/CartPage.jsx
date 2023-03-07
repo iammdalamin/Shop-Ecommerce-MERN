@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import CartItem from "../components/CartItem";
 import { getCart, removeCart } from "../helpers/SessionHelper";
 
 const CartPage = () => {
-  const cartItems = getCart();
+  const cart = useSelector((state) => state.cartSlice);
+  console.log(cart?.cartItems);
   const navigate = useNavigate();
   const deleteHandle = () => {
     removeCart();
@@ -17,7 +20,7 @@ const CartPage = () => {
   };
   return (
     <div className="px-12 py-20 w-full">
-      {cartItems ? (
+      {cart?.cartItems.length !== 0 ? (
         <div className="container">
           <table className="table-auto  mx-auto">
             <thead className="border-b-2 ">
@@ -29,7 +32,7 @@ const CartPage = () => {
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((prod, i) => {
+              {cart?.cartItems.map((prod, i) => {
                 return <CartItem key={i} prod={prod} />;
               })}
             </tbody>
@@ -50,8 +53,15 @@ const CartPage = () => {
           </div>
         </div>
       ) : (
-        <h1>
-          Your cart is empty. <a href="/products">Add to cart</a>
+        <h1 className="mt-8">
+          Your cart is empty.{" "}
+          <Link
+            className="
+          text-xl text-red-500"
+            to="/products"
+          >
+            <AiOutlineArrowLeft size={25} /> Start shopping
+          </Link>
         </h1>
       )}
     </div>

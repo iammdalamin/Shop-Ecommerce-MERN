@@ -75,12 +75,19 @@ exports.photo = async(req, res) => {
     }
 }
 
-exports.singleProduct = async(req, res) => {
+exports.singleProduct = async (req, res) => {
+    console.log(req.params.slug);
     try {
 
-        const product = await ProductModel.find({slug:req.params.slug}).select("-photo")
+        const product = await ProductModel.find({ slug: req.params.slug }).select("-photo")
+        
         if (product) {
-            return product
+            
+            console.log(product);
+            return res.status(200).json({
+                message: "Success",
+                data:product
+        })
         }
     } catch(err) {
         console.log(err);

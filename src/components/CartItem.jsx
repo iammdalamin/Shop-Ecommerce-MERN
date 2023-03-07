@@ -21,7 +21,6 @@ const CartItem = ({ prod }) => {
       options.push(i);
     }
   }, []);
-  console.log(options);
   return (
     <>
       <tr key={_id}>
@@ -29,8 +28,12 @@ const CartItem = ({ prod }) => {
         <td className="px-10">{price}</td>
         <td className="p-4">
           <select name="quantity" id="quantity">
-            {options.map((i) => {
-              return <option value={i++}>{i++}</option>;
+            {options.map((option, i) => {
+              return (
+                <option key={i} value={option++}>
+                  {option++}
+                </option>
+              );
             })}
           </select>{" "}
           <input

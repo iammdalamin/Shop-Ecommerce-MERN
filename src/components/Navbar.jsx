@@ -4,16 +4,11 @@ import { CgProfile } from "react-icons/cg";
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  getCart,
-  getUserDetails,
-  removeSessions,
-} from "../helpers/SessionHelper";
+import { getUserDetails, removeSessions } from "../helpers/SessionHelper";
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const [user, setUser] = useState(null);
-  const cart = useSelector((state) => state.Cart);
-  const cartItems = getCart();
+  const cart = useSelector((state) => state.cartSlice);
   const toggleHandle = () => {
     setToggle(!toggle);
   };
@@ -63,7 +58,7 @@ const Navbar = () => {
         <div className="nav-icons flex gap-4 relative">
           <Link to="/cart">
             <div className=" rounded-full text-sm  absolute bottom-4 left-2">
-              <span>{getCart() ? getCart().length + 1 : `0`}</span>
+              <span>{cart?.cartItems.length}</span>
             </div>
 
             <i className="text-2xl">

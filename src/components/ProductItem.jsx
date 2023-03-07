@@ -1,8 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getCart, setCart } from "../helpers/SessionHelper";
-import { AddCart } from "../redux/Slice/CartSlice";
+import { addToCart } from "../features/cartSlice";
 
 const ProductItem = ({ prod }) => {
   const { _id, slug, name, description, photo, price, category } = prod;
@@ -11,9 +10,8 @@ const ProductItem = ({ prod }) => {
   // console.log(cart.length);
   const dispatch = useDispatch();
   const cartHandle = async (prod) => {
-    dispatch(AddCart(prod));
+    dispatch(addToCart(prod));
   };
-  setCart(cart);
 
   return (
     <>

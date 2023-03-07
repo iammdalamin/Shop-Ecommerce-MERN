@@ -22,6 +22,7 @@
     "xss-clean": "^0.1.1"
   },
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build": "yarn build"
   }
 }
