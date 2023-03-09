@@ -1,45 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { getCart, setCart } from "../helpers/SessionHelper";
-
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart } from "../features/cartSlice";
 const CartItem = ({ prod }) => {
-  const { _id, name, price, quantity } = prod;
+  const { _id, name, price, quantity, cartQty } = prod;
   const [qty, setQty] = useState(1);
-  const [options, SetOption] = useState([]);
-
-  const cartItems = getCart();
-  const handleRemove = async (productId) => {
-    const newCart = await cartItems.filter((prod) => productId !== prod._id);
-    if (newCart.length < 1) {
-      setCart(null);
-    }
-    setCart(newCart);
-    window.location.reload(true);
+  const dispatch = useDispatch();
+  const handleRemove = async (prod) => {
+    dispatch(removeFromCart(prod));
   };
-  useEffect(() => {
-    for (let i = 0; i < quantity; i++) {
-      options.push(i);
-    }
-  }, []);
+
   return (
     <>
       <tr key={_id}>
         <td className="p-4">{name}</td>
         <td className="px-10">{price}</td>
         <td className="p-4">
-          <select name="quantity" id="quantity">
-            {options.map((option, i) => {
-              return (
-                <option key={i} value={option++}>
-                  {option++}
-                </option>
-              );
-            })}
-          </select>{" "}
           <input
             className="border-2 p-2"
-            defaultValue={"1"}
-            min="1"
+            defaultValue={cartQty}
             max={quantity}
             type="number"
             id="quantity"
@@ -50,10 +29,11 @@ const CartItem = ({ prod }) => {
         <td className="px-10" id="total" onChange={(e) => setTotal(e.target)}>
           {qty * price}
         </td>
-        <td className="px-10 cursor-pointer" onClick={() => handleRemove(_id)}>
+        <td className="px-10 cursor-pointer" onClick={() => handleRemove(prod)}>
           {<AiOutlineDelete size={25} />}
         </td>
       </tr>
+      Total: {}
     </>
   );
 };

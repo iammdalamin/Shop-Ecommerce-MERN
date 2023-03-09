@@ -11,24 +11,69 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addToCart(state, action) {
+        addToCart: (state, action)=> {
             const itemIndex = state.cartItems.findIndex(item => item._id === action.payload._id);
+          
             if (itemIndex >= 0) {
                 state.cartItems[itemIndex].cartQty += 1
                 cogoToast.info("increased product quantity", {
                     position:"bottom-left"
                 })
+               
             } else {
                 const tempProduct = {...action.payload, cartQty:1}
                 state.cartItems.push(tempProduct)
+                
                 cogoToast.success("Added a new product!", {
                     position:"bottom-left"
                 })
             }
             setCart(state.cartItems)
+        },
+        removeFromCart: (state, action)=> {
+            console.log(action.payload);
+            const nextCartItems = state.cartItems.filter((cartItem) => cartItem._id !== action.payload._id);
+            state.cartItems = nextCartItems;
+            setCart(state.cartItems);
+            cogoToast.error("Products removed from cart", {
+                position:"bottom-left"
+            })
+        },
+        decreaseCart: (state, action) => {
+            const itemIndex = state.cartItems.findIndex(item => item._id === action.payload._id);
+
+            if (cartItems[itemIndex].cartQty > 1) {
+                cartItems[itemIndex].cartQty -= 1;
+                cogoToast.info("Decreased product quantity", {
+                    position:"bottom-left"
+                })
+            } else if (cartItems[itemIndex].cartQty === 1) {
+                const nextCartItems = state.cartItems.filter((item) => item._id !== action.payload._id);
+                state.cartItems = nextCartItems;
+                setCart(state.cartItems)
+                cogoToast.error("Products removed from cart", {
+                    position:"bottom-left"
+                })
+            }
+        },
+        getTotal: (state, action) => {
+            let { total, quantity } = state.cartItems.reduce((cartTotal, cartItem) => {
+                const { price, cartQty } = cartItem;
+                const itemTotal = price * cartQty;
+                cartTotal.total += itemTotal;
+                cartTotal.quantity += cartQty;
+                return cartTotal;
+            }, {
+                total: 0,
+                quantity: 0
+            }
+            );
+            total = parseFloat(total.toFixed(2));
+            state.cartTotalQty = quantity;
+            state.cartTotalAmount = total;
         }
     }
 })
 
-export const { addToCart } = cartSlice.actions
+export const { addToCart,removeFromCart,decreaseCart,getTotal } = cartSlice.actions
 export default cartSlice.reducer;
