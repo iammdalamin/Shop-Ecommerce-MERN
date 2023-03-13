@@ -6,10 +6,11 @@ const router = express.Router()
 //middlewares
 const { requireSignIn, isAdmin } = require("../middlewares/AuthVerify");
 
-const { create, list, photo, singleProduct } = require("../controllers/products");
+const { create,productAdd, list, photo, singleProduct } = require("../controllers/products");
 
 
-router.post("/product", requireSignIn, isAdmin, formidable(), create)
+router.post("/product", requireSignIn, formidable(), create)
+router.post("/productAdd",productAdd)
 
 router.get("/list", list)
 router.get("/product/photo/:productId", photo);

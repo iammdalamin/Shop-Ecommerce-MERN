@@ -19,7 +19,12 @@ const cartSlice = createSlice({
                 cogoToast.info("increased product quantity", {
                     position:"bottom-left"
                 })
-               
+                if (state.cartItems[itemIndex].quantity < state.cartItems[itemIndex].cartQty) {
+                    state.cartItems[itemIndex].cartQty = state.cartItems[itemIndex].quantity
+                    cogoToast.info("Products Not Available Any More", {
+                        position:"bottom-left"
+                    })
+               }
             } else {
                 const tempProduct = {...action.payload, cartQty:1}
                 state.cartItems.push(tempProduct)
@@ -42,12 +47,12 @@ const cartSlice = createSlice({
         decreaseCart: (state, action) => {
             const itemIndex = state.cartItems.findIndex(item => item._id === action.payload._id);
 
-            if (cartItems[itemIndex].cartQty > 1) {
-                cartItems[itemIndex].cartQty -= 1;
+            if (state.cartItems[itemIndex].cartQty > 1) {
+                state.cartItems[itemIndex].cartQty -= 1;
                 cogoToast.info("Decreased product quantity", {
                     position:"bottom-left"
                 })
-            } else if (cartItems[itemIndex].cartQty === 1) {
+            } else if (state.cartItems[itemIndex].cartQty === 1) {
                 const nextCartItems = state.cartItems.filter((item) => item._id !== action.payload._id);
                 state.cartItems = nextCartItems;
                 setCart(state.cartItems)
@@ -55,6 +60,13 @@ const cartSlice = createSlice({
                     position:"bottom-left"
                 })
             }
+        },
+        clearCart: (state, action) => {
+            state.cartItems = []
+            setCart(state.cartItems)
+            cogoToast.error("Cart items cleared", {
+                position:"bottom-left"
+            })
         },
         getTotal: (state, action) => {
             let { total, quantity } = state.cartItems.reduce((cartTotal, cartItem) => {
@@ -75,5 +87,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const { addToCart,removeFromCart,decreaseCart,getTotal } = cartSlice.actions
+export const { addToCart,removeFromCart,decreaseCart,clearCart,getTotal } = cartSlice.actions
 export default cartSlice.reducer;

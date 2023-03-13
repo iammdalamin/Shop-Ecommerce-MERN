@@ -1,26 +1,30 @@
-import React from "react";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { AiOutlineArrowLeft, AiOutlineDelete } from "react-icons/ai";
+import { BsBagCheck } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartItem from "../components/CartItem";
-import { getTotal } from "../features/cartSlice";
-import { getCart, removeCart } from "../helpers/SessionHelper";
+import { clearCart, getTotal } from "../features/cartSlice";
+import { getUserDetails } from "../helpers/SessionHelper";
 
 const CartPage = () => {
+  const [auth, setAuth] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const cart = useSelector((state) => state.cartSlice);
   const deleteHandle = () => {
-    removeCart();
-    window.location.reload(true);
+    dispatch(clearCart());
   };
 
   const orderHandle = async () => {
-    const cart = await getCart();
+    if (auth === null) {
+      navigate("/Login");
+    }
     console.log(cart);
   };
   dispatch(getTotal());
-  console.log(cart);
+
   return (
     <div className="px-12 py-20 w-full">
       {cart?.cartItems.length !== 0 ? (
@@ -40,25 +44,35 @@ const CartPage = () => {
               })}
             </tbody>
           </table>
-          <div className="w-full flex justify-end ">
-            <h1>Total: {cart.cartTotalAmount}</h1>
-            <button
-              className="px-4 py-2 bg-red-900 text-white"
-              onClick={() => deleteHandle()}
-            >
-              Delete Cart
-            </button>
-            <button
-              onClick={() => orderHandle()}
-              className="px-4 py-2 bg-green-900 text-white"
-            >
-              CheckOut
-            </button>
+          <div className="w-full flex flex-col justify-end items-end border-t	">
+            <h1 className="pt-5 pb-2 text-2xl">
+              Total: {cart.cartTotalAmount}
+            </h1>
+            <span className="text-gray-500 text-sm">
+              Additional fees and taxes may apply*
+            </span>
+            <div className="flex gap-4 mt-5">
+              <button
+                className="px-4 py-2 bg-red-900 text-white"
+                onClick={() => deleteHandle()}
+              >
+                <span>
+                  Delete Cart
+                  <AiOutlineDelete size={24} />
+                </span>
+              </button>
+              <button
+                onClick={() => orderHandle()}
+                className="px-4 py-2 bg-green-900 text-white"
+              >
+                CheckOut <BsBagCheck size={24} />
+              </button>
+            </div>
           </div>
         </div>
       ) : (
         <div>
-          <h1 className="mt-8">
+          <h1 className="mt-8 ">
             Your cart is empty.{" "}
             <Link
               className="flex gap-4 

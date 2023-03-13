@@ -1,4 +1,5 @@
 import { createApi,fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { getToken } from '../helpers/SessionHelper';
 
 export const productsApi = createApi({
     reducerPath: "productsApi",
@@ -9,8 +10,21 @@ export const productsApi = createApi({
         }),
         singleProduct: builder.query({
             query:(slug)=> `/product/${slug}`
+        }),
+        productAdd: builder.query({
+            query: (body) => ({
+                url:`/productAdd`,
+                method: "POST",
+                body,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+      token: getToken(),
+                }
+
+            })
+           
         })
     })
 })
 
-export const { useGetAllProductsQuery, useSingleProductQuery } = productsApi;
+export const { useGetAllProductsQuery, useSingleProductQuery, useProductAddQuery } = productsApi;

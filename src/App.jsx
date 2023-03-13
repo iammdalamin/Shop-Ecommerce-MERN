@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Products from "./components/Products";
 import { getUserDetails } from "./helpers/SessionHelper";
 import AboutPage from "./pages/AboutPage";
+import ProductCreatePage from "./pages/Admin/ProductCreatePage";
 import AdminDashboard from "./pages/AdminDashboard";
 import CartPage from "./pages/CartPage";
 import ContactPage from "./pages/ContactPage";
@@ -42,6 +43,7 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
 
           {/* AdminPages */}
+          <Route path="/admin/productCreate" element={<ProductCreatePage />} />
 
           <Route path="*" element={<h1>Error source</h1>} />
         </Routes>

@@ -4,11 +4,10 @@ const UserModel = require("../models/UserModel");
 
   exports.requireSignIn = (req, res, next) => {
     let token = req.headers["token"]
-
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
-            res.json({
-                err:"Unauthorized"
+            res.status(401).json({
+                message:"Unauthorized"
             })
         } else {
             let email = decoded
@@ -25,8 +24,7 @@ const UserModel = require("../models/UserModel");
          const user = await UserModel.findOne({email:email});
          console.log("user==>", req.headers.email);
         if (user.role !== 1) {
-            return res.json({
-                status: 401,
+            return res.status(401).json({
                 message:"Unauthorized"
             })
         } else {

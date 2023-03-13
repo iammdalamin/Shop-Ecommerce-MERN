@@ -4,16 +4,19 @@ const fs = require("fs")
 const slugify = require("slugify");
 const ProductModel = require("../models/ProductModel.js");
 
+const formidable = require("formidable");
 
 
 
 
 exports.create = async (req, res) => {
     try {
-        
+        console.log(req.fields);
+        console.log(req);        
+       
         const { name, description, price, category, quantity, shipping } = req.fields;
         const { photo } = req.files;
-
+        console.log(photo);
         //Validation
         switch (true) {
             case !name?.trim():
@@ -37,13 +40,18 @@ exports.create = async (req, res) => {
         //create product
 
         const product = new Product({ ...req.fields, slug: slugify(name) })
-        
+        console.log(product);
         if (photo) {
             product.photo.data = fs.readFileSync(photo.path)
-            product.photo.cntentType = photo.type;
+            product.photo.contentType = photo.type;
         }
         await product.save();
-        res.json(product)
+        res.status(201).json(
+            {
+                message: "Product Add Success",
+                data:product
+            }
+        )
     }catch(err) {
         console.log(err);
     }
@@ -93,3 +101,15 @@ exports.singleProduct = async (req, res) => {
         console.log(err);
     }
 }
+
+exports.productAdd = async (req, res) => {
+    console.log(req.body);
+    const form = formidable({ multiples: true });
+    form.parse(req, (err, fields, files) => {
+        console.log(fields);
+    })
+}
+
+
+
+
