@@ -24,11 +24,7 @@ const ProductPage = () => {
         ) : (
           <>
             {" "}
-            <img
-              className="w-1/2"
-              src={`http://localhost:5000/api/v1/product/photo/${prod._id}`}
-              alt={prod.name}
-            />
+            <img className="w-1/2" src={prod.photo} alt={prod.name} />
             <div className="p-10">
               <h1 className="text-3xl">{prod.name}</h1>
               <p className="text-lg leading-6">{prod.description}</p>

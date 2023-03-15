@@ -3,6 +3,10 @@ const { ObjectId } = mongoose.Schema;
 
 
 const ProductSchema = new mongoose.Schema({
+    email:{
+        type: String,
+        required:true
+    },
     name: {
         type: String,
         trim: true,
@@ -36,8 +40,8 @@ const ProductSchema = new mongoose.Schema({
         default:0,
     },
     photo: {
-        data: Buffer,
-        contentType: String,
+        type: String,
+        required:true
         
     },
     shipping: {

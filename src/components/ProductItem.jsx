@@ -12,14 +12,14 @@ const ProductItem = ({ prod }) => {
   const cartHandle = async (prod) => {
     dispatch(addToCart(prod));
   };
-
+  console.log(photo);
   return (
     <>
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <Link to={`/product/${slug}`}>
           <img
             className="p-8 rounded-t-lg w-full h-[330px]"
-            src={`http://localhost:5000/api/v1/product/photo/${_id}`}
+            src={photo}
             alt={`${name}`}
           />
         </Link>
