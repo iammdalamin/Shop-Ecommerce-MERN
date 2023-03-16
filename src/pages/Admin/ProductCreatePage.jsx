@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useProductAddMutation } from "../../features/productsApi";
 
 const ProductCreatePage = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState();
@@ -49,7 +50,9 @@ const ProductCreatePage = () => {
       };
     }
   };
-  console.log(result);
+  //  if(result.status === "fulfilled"){
+  //   navigate("/admin/dash")
+  //   };
   return (
     <div className="w-full h-full flex justify-center items-center ">
       <div className="w-[550px] h-full bg-slate-600 mt-48 p-8">
