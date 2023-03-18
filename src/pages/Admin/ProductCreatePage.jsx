@@ -27,15 +27,12 @@ const ProductCreatePage = () => {
       shipping: true,
       quantity,
     };
-
-    await productAdd(data)
-      .unwrap()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("Error", error);
-      });
+    try {
+      const payload = await productAdd(data).unwrap();
+      console.log("fulfilled", payload);
+    } catch (error) {
+      console.error("rejected", error);
+    }
   };
   const onChangeHandle = (e) => {
     const file = e.target.files[0];

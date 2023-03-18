@@ -1,12 +1,13 @@
 import React from "react";
 import MasterLayout from "../components/MasterLayout";
+import Products from "../components/Products";
 
-const AboutPage = () => {
+const ProductsPage = () => {
   return (
     <MasterLayout>
-      <h1>AboutPage</h1>
+      <Products />
     </MasterLayout>
   );
 };
 
-export default AboutPage;
+export default ProductsPage;

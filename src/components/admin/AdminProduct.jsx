@@ -1,14 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  useDeleteProductMutation,
-  useDeleteProductQuery,
-  useGetAllProductsAdminQuery,
-} from "../../features/productsApi";
 
 const AdminProduct = ({ prod, deleteHandle }) => {
-  const [deleteProduct, result] = useDeleteProductMutation();
-
   const { _id, slug, name, description, photo, price, category } = prod;
 
   return (

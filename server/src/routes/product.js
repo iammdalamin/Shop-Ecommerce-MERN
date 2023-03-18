@@ -10,7 +10,7 @@ const { create,productAdd, list, photo, singleProduct, adminProductList, product
 
 
 router.post("/product", requireSignIn, formidable(), create)
-router.post("/productAdd",requireSignIn,productAdd)
+router.post("/productAdd",requireSignIn,isAdmin,productAdd)
 
 router.get("/list", list)
 router.get("/adminProductList",requireSignIn, isAdmin,adminProductList)

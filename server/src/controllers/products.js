@@ -93,10 +93,8 @@ exports.singleProduct = async (req, res) => {
 };
 
 exports.productAdd = async (req, res) => {
-  // console.log(req.body);
   try {
     const { email } = req.headers;
-    console.log(email);
     const { name, description, photo, category, price, quantity, shipping } =
       req.body;
     // //Validation
@@ -120,6 +118,9 @@ exports.productAdd = async (req, res) => {
       const result = await cloudinary.uploader.upload(photo, {
         upload_preset: "shop",
       });
+      console.log(result);
+
+
       if (result) {
        const product = await ProductModel.create({
           email,
@@ -132,7 +133,6 @@ exports.productAdd = async (req, res) => {
           photo: result.url,
           slug: slugify(name),
         });
-
         res.status(201).json({
           message: "Product Add Success",
           data: product,

@@ -22,7 +22,6 @@ const UserModel = require("../models/UserModel");
      try {
          const email = req.headers.email;
          const user = await UserModel.findOne({email:email});
-         console.log("user==>", req.headers.email);
         if (user.role !== 1) {
             return res.status(401).json({
                 message:"Unauthorized"

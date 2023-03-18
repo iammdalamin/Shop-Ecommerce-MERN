@@ -5,7 +5,7 @@ import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserDetails, removeSessions } from "../helpers/SessionHelper";
-const Navbar = () => {
+const MasterLayout = ({ children }) => {
   const [toggle, setToggle] = useState(false);
   const [user, setUser] = useState(null);
   const cart = useSelector((state) => state.cartSlice);
@@ -45,7 +45,7 @@ const Navbar = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/products">Products</Link>
+              <Link to="/ProductsPage">Products</Link>
             </li>
             <li>
               <Link to="/AboutPage">About</Link>
@@ -122,7 +122,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link className="text-2xl" to="/ProductPage">
+            <Link className="text-2xl" to="/ProductsPage">
               Products
             </Link>
           </li>
@@ -138,8 +138,9 @@ const Navbar = () => {
           </li>
         </div>
       </div>
+      <div>{children}</div>
     </>
   );
 };
 
-export default Navbar;
+export default MasterLayout;

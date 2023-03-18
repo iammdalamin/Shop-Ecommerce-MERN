@@ -1,7 +1,12 @@
 import React from "react";
+import MasterLayout from "../components/MasterLayout";
 
 const ContactPage = () => {
-  return <div>ContactPage</div>;
+  return (
+    <MasterLayout>
+      <h1>Contact</h1>
+    </MasterLayout>
+  );
 };
 
 export default ContactPage;

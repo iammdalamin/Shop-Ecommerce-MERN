@@ -20,16 +20,7 @@ export const productsApi = createApi({
         },
       }),
     }),
-    deleteProduct: builder.query({
-      query: (id) => ({
-        url: `/adminProductDelete/${id}`,
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          "token": getToken(),
-        },
-      }),
-    }),
+ 
     singleProduct: builder.query({
       query: (slug) => `/product/${slug}`,
     }),
@@ -63,5 +54,5 @@ export const {
   useGetAllProductsQuery,
   useSingleProductQuery,
   useProductAddMutation,
-  useGetAllProductsAdminQuery,useDeleteProductQuery, useDeleteProductMutation
+  useGetAllProductsAdminQuery, useDeleteProductMutation
 } = productsApi;
