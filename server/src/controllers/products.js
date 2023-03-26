@@ -76,12 +76,10 @@ exports.adminProductList = async (req, res) => {
 };
 
 exports.singleProduct = async (req, res) => {
-  console.log(req.params.slug);
   try {
     const product = await ProductModel.find({ slug: req.params.slug });
 
     if (product) {
-      console.log(product);
       return res.status(200).json({
         message: "Success",
         data: product,
@@ -118,7 +116,6 @@ exports.productAdd = async (req, res) => {
       const result = await cloudinary.uploader.upload(photo, {
         upload_preset: "shop",
       });
-      console.log(result);
 
 
       if (result) {

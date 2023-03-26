@@ -28,7 +28,6 @@ function App() {
   useEffect(() => {
     UserDetails();
   }, []);
-  console.log(user?.role);
   const ProtectedRoute = ({ children }) => {
     if (user?.role === 1) {
       return children;
