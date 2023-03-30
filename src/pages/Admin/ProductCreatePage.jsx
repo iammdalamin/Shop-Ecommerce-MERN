@@ -1,20 +1,26 @@
+import cogoToast from "cogo-toast";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/admin/AdminLayout";
-import { useProductAddMutation } from "../../features/productsApi";
+import { useGetAllCategoriesQuery } from "../../features/categoryApi";
+import {
+  useGetAllProductsAdminQuery,
+  useProductAddMutation,
+} from "../../features/productsApi";
 
 const ProductCreatePage = () => {
+  const { refetch } = useGetAllProductsAdminQuery();
+
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState();
   const [quantity, setQuantity] = useState();
   const [img, setImg] = useState("");
-  const [category, setCategory] = useState("640b620dabd2316b635c150e");
+  const [category, setCategory] = useState("");
   const [shipping, setShipping] = useState(true);
   const [item, setItem] = useState();
   const [productAdd, result] = useProductAddMutation();
-
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,18 +29,21 @@ const ProductCreatePage = () => {
       name: title,
       description: desc,
       price,
-      category: "640b620dabd2316b635c150e",
+      category,
       shipping: true,
       quantity,
     };
     try {
-      const payload = await productAdd(data).unwrap();
-      console.log("fulfilled", payload);
-      if (payload) {
-        navigate("/admin/dashboard/products");
-      }
+      await productAdd(data)
+        .unwrap()
+        .then(() => {
+          refetch();
+          cogoToast.success("Product Added Successfully");
+
+          navigate("/admin/dashboard/products");
+        });
     } catch (error) {
-      console.error("rejected", error);
+      cogoToast.error(error.data.message);
     }
   };
   const onChangeHandle = (e) => {
@@ -51,6 +60,10 @@ const ProductCreatePage = () => {
     }
   };
 
+  const { data, error, isLoading } = useGetAllCategoriesQuery();
+  if (result.status === "pending") {
+    cogoToast.loading("Please wait...");
+  }
   return (
     <AdminLayout>
       <div className="w-full h-full flex justify-center items-center ">
@@ -83,6 +96,27 @@ const ProductCreatePage = () => {
               className="p-2 rounded-md"
               onChange={(e) => setQuantity(e.target.value)}
             />
+
+            <select
+              onClick={(e) => setCategory(e.target.value)}
+              id="countries"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option disabled selected>
+                Choose a category
+              </option>
+
+              {data?.map((item) => {
+                return (
+                  <>
+                    <option key={item._id} value={item._id}>
+                      {item.name}
+                    </option>
+                    ;
+                  </>
+                );
+              })}
+            </select>
             <input
               type="file"
               placeholder="Image"

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { LoginRequest } from "../ApiRequest/api";
 import { getUserDetails } from "../helpers/SessionHelper";
 
@@ -63,6 +64,13 @@ const LoginPage = () => {
             Login
           </button>
         </div>
+        <span className="text-white">
+          If you haven't account then{" "}
+          <Link to="/Signup" className="text-slate-800 font-bold">
+            Sign Up{" "}
+          </Link>{" "}
+          first!!
+        </span>
       </div>
     </div>
   );

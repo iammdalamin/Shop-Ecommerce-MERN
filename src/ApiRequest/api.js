@@ -9,7 +9,8 @@ const AxiosHeader = {
     }
 
 };
-const BaseURL = "http://localhost:5000/api/v1";
+// const BaseURL = "http://localhost:5000/api/v1";
+const BaseURL = "https://shop-server-ymqb.onrender.com/api/v1";
 export const SignupRequest = async (reqBody) => {
   const URL = BaseURL + "/registration";
   await axios.post(URL, reqBody).then((res) => {

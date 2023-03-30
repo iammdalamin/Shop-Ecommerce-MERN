@@ -12,7 +12,6 @@ const ProductItem = ({ prod }) => {
   const cartHandle = async (prod) => {
     dispatch(addToCart(prod));
   };
-  console.log(photo);
   return (
     <>
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">

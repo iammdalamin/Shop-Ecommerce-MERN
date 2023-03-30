@@ -95,22 +95,22 @@ exports.productAdd = async (req, res) => {
     const { email } = req.headers;
     const { name, description, photo, category, price, quantity, shipping } =
       req.body;
-    // //Validation
-    // switch (true) {
-    //   case !name?.trim():
-    //     return res.json({ error: "Name is required" });
-    //   case !description.trim():
-    //     return res.json({ error: "Description is required" });
-    //   case !price?.trim():
-    //     return res.json({ error: "Price is required" });
-    //   case !category?.trim():
-    //     return res.json({ error: "Category is required" });
-    //   case !quantity?.trim():
-    //     return res.json({ error: "Quantity is required" });
-    //   case !shipping?.trim():
-    //     return res.json({ error: "Shipping is required" });
+    //Validation
+    switch (true) {
+      case !name?.trim():
+        return res.status(400).json({ message: "Name is required" });
+      case !description.trim():
+        return res.status(400).json({ message: "Description is required" });
+      case !price?.trim():
+        return res.status(400).json({ message: "Price is required" });
+      case !category?.trim():
+        return res.status(400).json({ message: "Category is required" });
+      case !quantity?.trim():
+        return res.status(400).json({ message: "Quantity is required" });
+      // case !shipping?.trim():
+      //   return res.status(400).json({ message: "Shipping is required" });
       
-    // }
+    }
 
     if (photo) {
       const result = await cloudinary.uploader.upload(photo, {

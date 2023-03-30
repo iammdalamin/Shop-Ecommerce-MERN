@@ -11,14 +11,12 @@ const AdminProductPage = () => {
   const [deleteProduct, result] = useDeleteProductMutation();
   const { refetch, data, isLoading, error } = useGetAllProductsAdminQuery();
 
-  console.log(data);
   const deleteHandle = async (e, id) => {
     e.preventDefault();
 
     await deleteProduct(id);
     refetch();
   };
-  console.log(result);
   return (
     <AdminLayout>
       <div className="px-12 py-20">

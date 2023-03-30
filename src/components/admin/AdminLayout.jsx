@@ -11,7 +11,6 @@ import { getUserDetails } from "../../helpers/SessionHelper";
 const AdminLayout = ({ children }) => {
   const [toggle, setToggle] = useState(false);
   const { data } = getUserDetails();
-  console.log(data);
   return (
     <div>
       {toggle ? (

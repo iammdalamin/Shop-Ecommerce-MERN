@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Products from "./components/Products";
 import { getUserDetails } from "./helpers/SessionHelper";
@@ -31,6 +31,8 @@ function App() {
   const ProtectedRoute = ({ children }) => {
     if (user?.role === 1) {
       return children;
+    } else {
+      return <NotFoundPage />;
     }
   };
   return (
@@ -44,7 +46,6 @@ function App() {
           <Route path="/Signup" element={<SignupPage />} />
           <Route path="/Login" element={<LoginPage />} />
           <Route path="/product/:slug" element={<ProductPage />} />
-          <Route path="/products" element={<Products />} />
           <Route path="/cart" element={<CartPage />} />
 
           {/* AdminPages */}

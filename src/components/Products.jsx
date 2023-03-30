@@ -4,7 +4,6 @@ import Loading from "./Loading";
 import ProductItem from "./ProductItem.jsx";
 const Products = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
-  console.log(data);
   return (
     <div className="px-12 py-20">
       <h1 className="text-4xl font-extrabold">Products</h1>

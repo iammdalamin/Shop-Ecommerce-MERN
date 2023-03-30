@@ -51,7 +51,7 @@ const Hero = () => {
                 <h1 className="text-6xl font-bold text-[#1a1a1a]">{title}</h1>
                 <p className="text-[#333] mb-8">{text}</p>
                 <a
-                  href="/products"
+                  href="/ProductsPage"
                   className=" bg-[#000] hover:bg-[#fff] hover:text-[#000] text-white  px-8 py-4  ease-in-out duration-500 cursor-pointer"
                 >
                   Shop Now

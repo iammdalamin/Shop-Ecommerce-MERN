@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "http://localhost:5000/api/v1",
+  "proxy": "https://shop-server-ymqb.onrender.com/api/v1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
+    "apexcharts": "^3.37.2",
     "axios": "^1.2.3",
     "cogo-toast": "^4.2.3",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-paginate": "^8.1.4",

@@ -7,13 +7,29 @@ const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
+  const [photo, setPhoto] = useState("");
   const navigate = useNavigate();
+  const onChangeHandle = (e) => {
+    const file = e.target.files[0];
+    TransformFile(file);
+  };
+  const TransformFile = (file) => {
+    const reader = new FileReader();
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setPhoto(reader.result);
+      };
+    }
+  };
+
   const handleOnSubmit = () => {
     SignupRequest({
       name,
       email,
       password,
       address,
+      photo,
     });
     navigate("/login");
   };
@@ -46,6 +62,12 @@ const SignupPage = () => {
             placeholder="Address"
             className="p-2 rounded-md"
             onChange={(e) => setAddress(e.target.value)}
+          />
+          <input
+            type="file"
+            placeholder="Image"
+            className="p-2 rounded-md"
+            onChange={(e) => onChangeHandle(e)}
           />
           <button
             onClick={handleOnSubmit}

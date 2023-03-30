@@ -88,7 +88,7 @@ const MasterLayout = ({ children }) => {
                     className="mt-10 px-5 py-2 text-lg font-bold bg-gray-900 text-slate-200"
                     onClick={(e) => logoutHandle(e)}
                   >
-                    <Link to="/signup">SignUp</Link>
+                    <Link to="/Login">Login</Link>
                   </button>
                 </>
               )}

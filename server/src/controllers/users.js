@@ -5,7 +5,7 @@ const UserModel = require("../models/UserModel");
 
 exports.registration = async (req, res) => {
     try {
-        const { name, email, password, address } = req.body;
+        const { name, email, password, address, photo } = req.body;
         if (!name.trim()) {
             return res.json({status:400,
                 error:"Name is required"})
@@ -34,27 +34,36 @@ exports.registration = async (req, res) => {
         }
         const hashedPassword = await hashPassword(password)
 
-        const user = await new UserModel({
-            name,
-            email,
-            address,
-            password:hashedPassword
-        }).save()
-
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-            expiresIn:"7d",
-        })
-
-        res.json({
-            user: {
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                address:user.address
-            },
-            token
-
-        })
+        if (photo) {
+            const result = await cloudinary.uploader.upload(photo, {
+                upload_preset: "user_preset",
+            });
+        }
+        if (result) {
+            const user = await new UserModel({
+                name,
+                email,
+                address,
+                photo:result.url,
+                password:hashedPassword
+            }).save()
+    
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+                expiresIn:"7d",
+            })
+    
+            res.json({
+                user: {
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    address:user.address
+                },
+                token
+    
+            })
+        }
+      
 
     } catch(err) {
         console.log(err);

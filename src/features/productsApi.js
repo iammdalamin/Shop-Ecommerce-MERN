@@ -3,7 +3,8 @@ import { getToken } from "../helpers/SessionHelper";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),
+  // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://shop-server-ymqb.onrender.com/api/v1" }),
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: () => "list",

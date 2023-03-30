@@ -1,7 +1,7 @@
 
 
 const express = require("express") ;
-const { create } = require("../controllers/category") ;
+const { create, allCategories } = require("../controllers/category") ;
 
 const router = express.Router();
 
@@ -10,6 +10,7 @@ const { requireSignIn, isAdmin } = require("../middlewares/AuthVerify");
 
 
 
-router.post("/category", requireSignIn, isAdmin, create);
+router.post("/category-create", requireSignIn, isAdmin, create);
+router.get("/categories", requireSignIn, isAdmin, allCategories);
 
 module.exports = router ;

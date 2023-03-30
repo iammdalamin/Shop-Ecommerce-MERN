@@ -27,3 +27,15 @@ exports.create = async (req, res) => {
 
     }
 }
+
+exports.allCategories = async (req, res) => {
+    
+    try {
+        const categories = await CategoryModel.find({ });
+        res.json(categories)
+    } catch (err) {
+        console.log(err);
+        return res.status(400).json(err);
+
+    }
+}
